@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Load the loan dataset
-df = pd.read_csv('/Users/shreya/Desktop/DATA/Datasets/Credit-Risk-Analysis/Credit Risk Analysis/loan/loan.csv')
+df = pd.read_csv('/Users/shreya/Desktop/DATA/Datasets/CSV_Credit Risk Analysis/loan.csv')
 
 # Overview of the data
 print("Data Info:")
