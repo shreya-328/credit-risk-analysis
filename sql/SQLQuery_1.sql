@@ -82,14 +82,3 @@ ORDER BY
     default_rate DESC;
 
 
-SELECT 
-    addr_state,
-    COUNT(*) AS total_loans,
-    SUM(CASE WHEN loan_status = 'Charged Off' THEN 1 ELSE 0 END) AS defaulted_loans,
-    CAST(SUM(CASE WHEN loan_status = 'Charged Off' THEN 1 ELSE 0 END) AS FLOAT) / COUNT(*) AS default_rate
-FROM 
-    [Credit_Risk_Analysis].[dbo].[loan_cleaned]
-GROUP BY 
-    addr_state
-ORDER BY 
-    default_rate DESC;
