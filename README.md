@@ -27,8 +27,8 @@ Identify patters of default risk in loan applicants and inform risk-driven lendi
    - Loaded raw dataset, reviewed schema/types
    - Dropped columns with >70% missing data
    - Imputed missing values:
-       -**Numerical:**median
-       -**Categorical:**mode or 'Unknown'
+       -**Numerical:** median
+       -**Categorical:** mode or 'Unknown'
    - Standardized data types and cleaned text columns
    - Exported Cleaned Data for further analysis
 
