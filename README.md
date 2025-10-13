@@ -43,28 +43,22 @@ Identify patters of default risk in loan applicants and inform risk-driven lendi
         - Interest Rate and Annual Income show limited Correlation
     - Summary of Insights : informs all next SQL and Dashboard Work
           
+3. Prepared for Next Phase
+    - All Cleaning and EDA completed
+    - Ready to move to Advancced SQL and Power BI
+  
+## Key Visuals and Outputs
+  - Loan Status Bar Chart
+  - Histograms for Loan Amount, Income, Rate
+  - BoxPlots for outlier analysis
+  - Category bar charts for Grade, Purpose
+  - Correlation Heatmap for major features
+  - Default rates by Key Business Segments
+
+## Next Steps
+  - Targeted SQL queries for deeper Business Insights
+  - Power BI/LookerStudio/Tableau Dashboard using key EDA findings for clear, actionable Stortelling
 
 ## Author
 Shreya Nigam
    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
