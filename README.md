@@ -15,9 +15,9 @@ Identify patters of default risk in loan applicants and inform risk-driven lendi
 ```credit-risk-analysis/
 ├── python/
 │   ├── data_cleaning.py
-│   └── eda_analysis.ipynb
+│   └── eda_analysis.py
 ├── sql/
-│   └── analysis_queries.sql
+│   └── SQLQuery_1.sql
 └── README.md
 ```
 
