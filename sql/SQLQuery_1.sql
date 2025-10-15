@@ -105,4 +105,55 @@ GROUP BY
 ORDER BY 
     default_rate DESC;
 
+-- Composite Risk Segmentation
+--Purpose: Find the default rate for borrowers with multiple overlapping risks (e.g., high loan amount, high DTI, low income).
+
+SELECT 
+    COUNT(*) AS total_loans,
+    SUM(CASE WHEN loan_status = 'Charged Off' THEN 1 ELSE 0 END) AS defaulted_loans,
+    CAST(SUM(CASE WHEN loan_status = 'Charged Off' THEN 1 ELSE 0 END) AS FLOAT) / COUNT(*) AS default_rate
+FROM 
+    [Credit_Risk_Analysis].[dbo].[loan_cleaned] 
+    WHERE loan_amnt > 20000 and dti > 25 AND annual_inc < 60000
+
+-- Feature engg : Risk Flag Creation (Create new column/flags to categorize borrowers into risk bands. This makes dashboarding and business decision much easier)
+-- Creating risk flags for high-risk borrowers
+SELECT *,
+  CASE
+    WHEN dti > 25 AND int_rate > 15 THEN 'High Risk'
+    WHEN dti > 20 OR int_rate > 12 THEN 'Medium Risk'
+    ELSE 'Low Risk'
+  END AS risk_category,
+  CASE
+    WHEN annual_inc < 50000 THEN 'Low Income'
+    WHEN annual_inc BETWEEN 50000 AND 100000 THEN 'Medium Income'
+    ELSE 'High Income'
+  END AS income_bracket
+FROM [Credit_Risk_Analysis].[dbo].[loan_cleaned]
+
+
+-- Default rates by risk category and income bracket for dashboarding
+SELECT
+  risk_category,
+  income_bracket,
+  COUNT(*) AS total_loans,
+  SUM(CASE WHEN loan_status = 'Charged Off' THEN 1 ELSE 0 END) AS defaulted_loans,
+  CAST(SUM(CASE WHEN loan_status = 'Charged Off' THEN 1 ELSE 0 END) AS FLOAT) / COUNT(*) AS default_rate
+FROM (
+    SELECT
+      CASE
+        WHEN dti > 25 AND int_rate > 15 THEN 'High Risk'
+        WHEN dti > 20 OR int_rate > 12 THEN 'Medium Risk'
+        ELSE 'Low Risk'
+      END AS risk_category,
+      CASE
+        WHEN annual_inc < 50000 THEN 'Low Income'
+        WHEN annual_inc BETWEEN 50000 AND 100000 THEN 'Medium Income'
+        ELSE 'High Income'
+      END AS income_bracket,
+      loan_status
+    FROM [Credit_Risk_Analysis].[dbo].[loan_cleaned]
+) AS derived
+GROUP BY risk_category, income_bracket
+ORDER BY default_rate DESC, risk_category
 
