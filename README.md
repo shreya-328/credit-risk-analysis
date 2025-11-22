@@ -56,8 +56,63 @@ Identify patters of default risk in loan applicants and inform risk-driven lendi
   - Default rates by Key Business Segments
 
 ## Next Steps
-  - Targeted SQL queries for deeper Business Insights
-  - Power BI/LookerStudio/Tableau Dashboard using key EDA findings for clear, actionable Stortelling
+Business Problem & Approach (Next Phase) 
+
+Business Problem 
+
+Lending institutions face high financial risk when borrowers default on loans. The goal is to use borrower demographic, financial, and credit behavior data to predict the likelihood of loan default, enabling banks to make more informed lending decisions, optimize risk exposure, and improve portfolio quality. 
+
+Approach for the Upcoming Stages 
+
+To solve this, the project will extend beyond data cleaning and EDA into advanced analytic steps used in real credit-risk teams: 
+
+Feature Engineering 
+
+- Create borrower risk indicators such as DTI buckets, interest-rate bands, credit utilization flags, income tiers, installment-to-income ratio, and combined risk categories. 
+
+- Enhance interpretability by building business-friendly categorical variables. 
+
+Credit Risk Modeling (Supervised Machine Learning) 
+
+- Convert loan_status into a binary default flag. 
+
+- Train baseline and advanced models (Logistic Regression, Random Forest, XGBoost). 
+
+- Evaluate models with industry metrics: ROC-AUC, Precision/Recall, Confusion Matrix. 
+
+- Generate Probability of Default (PD) for each borrower. 
+
+Risk Scorecard Development 
+
+- Translate PD predictions into a scorecard similar to those used by credit bureaus. 
+
+- Create risk buckets (Low, Medium, High, Very High Risk) for business decisions. 
+
+Business Insights Development 
+
+- Identify segments with the highest expected loss. 
+
+R- ecommend changes in credit policy, pricing strategy, and approval rules. 
+
+- Provide actionable insights for risk managers and underwriters. 
+
+Dashboard & Reporting (Power BI / Tableau) 
+
+- Build a comprehensive Credit Risk Dashboard containing: 
+
+- Portfolio overview 
+
+- Default trends 
+
+- Risk segmentation 
+
+- Top risky borrower profiles 
+
+- State-wise and purpose-wise performance 
+
+Final output will serve as a presentation-ready analytical story for portfolio monitoring. 
+
+ 
 
 ## Author
 Shreya Nigam
