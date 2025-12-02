@@ -112,13 +112,15 @@ Dashboard & Reporting (Power BI / Tableau)
 
 Final output will serve as a presentation-ready analytical story for portfolio monitoring. 
 
- ────────────────────────────────────────────────────────────────────
-                    CREDIT RISK ANALYSIS — SUMMARY
-────────────────────────────────────────────────────────────────────
+                    
+                    CREDIT RISK ANALYSIS - SUMMARY
 
 BUSINESS GOAL:
+
   ✔ Identify high-default borrower segments
+  
   ✔ Understand drivers of credit risk
+  
   ✔ Help lenders make better approval, pricing & monitoring decisions
 
 APPROACH:
@@ -129,22 +131,34 @@ APPROACH:
   5. Business Insights & Recommendations
 
 KEY QUESTIONS ANSWERED:
+
   ✔ Who defaults?
+  
   ✔ Why do they default?
+  
   ✔ Which borrower groups are most risky?
+  
   ✔ Which financial attributes drive risk?
+  
   ✔ Which segments need stricter lending rules?
+  
 
 HOW IT WAS SOLVED:
+
   → Python: cleaning, distributions, outliers, correlations
+  
   → SQL: segmentation, default rates, composite risk flags
+  
   → Insights: DTI, income, purpose, sub-grade, utilization are strongest predictors
 
 BUSINESS OUTCOME:
+
   → Clear understanding of borrower risk
+  
   → Action-ready risk categories
+  
   → Data-driven lending decisions
-────────────────────────────────────────────────────────────────────
+
 
 
 ## Author
