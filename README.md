@@ -1,27 +1,21 @@
-Credit Risk Analysis Project
-1. Project Overview
+# Credit Risk Analysis Project
 
-This project is an end-to-end Credit Risk Analysis pipeline built using Python and SQL. It identifies patterns of loan default, analyzes borrower risk factors, and provides insights that support data-driven lending decisions. It demonstrates core data analyst skills including data cleaning, exploratory analysis, feature engineering, SQL segmentation, and business insight reporting.
+## 1. Project Overview
+This project is an end-to-end Credit Risk Analysis pipeline built using Python and SQL. It identifies patterns of loan default, analyzes borrower risk factors, and provides insights that support data-driven lending decisions. It demonstrates core data analysis skills including data cleaning, exploratory analysis, SQL analytics, and insight generation.
 
-2. Business Objective
-
+## 2. Business Objective
 To analyze borrower demographic, financial, and credit behavior data in order to:
+- Identify borrower segments with high default risk
+- Understand key drivers of credit risk
+- Support lending teams in improving loan approvals, pricing, and portfolio monitoring
 
-Identify borrower segments with high default risk
+## 3. Dataset Information
+- Source: Kaggle – Credit Risk Dataset by “ranadeep”
+- Contains borrower financial information, demographics, credit behavior, and loan repayment details
+- Raw data is available on Kaggle and not stored in this repository
 
-Understand key drivers of credit risk
-
-Support lending teams in improving loan approvals, pricing, and portfolio monitoring
-
-3. Dataset Information
-
-Source: Kaggle – Credit Risk Dataset by “ranadeep”
-
-Contains borrower financial information, demographics, credit behavior, and repayment status
-
-Raw data is available on Kaggle and not stored in this repository
-
-4. Project Structure
+## 4. Project Structure
+```
 credit-risk-analysis/
 ├── python/
 │   ├── data_cleaning.py
@@ -29,64 +23,52 @@ credit-risk-analysis/
 ├── sql/
 │   └── SQLQuery_1.sql
 └── README.md
+```
 
-5. Workflow Completed
-Data Cleaning (Python)
+## 5. Workflow Completed
 
-Loaded the raw dataset and reviewed schema
+### Data Cleaning (Python)
+- Loaded the raw dataset and reviewed schema
+- Removed columns with more than 70% missing data
+- Imputed missing numerical values using median
+- Imputed categorical missing values using mode or “Unknown”
+- Standardized data types and cleaned categorical values
+- Exported the cleaned dataset for further analysis
 
-Removed columns with more than 70% missing data
+### Exploratory Data Analysis (Python)
+- Loan status distribution
+- Histograms of annual income, loan amount, interest rate
+- Categorical analysis of grade, purpose, employment length
+- Outlier detection using boxplots
+- Correlation heatmap showing:
+  - High correlation between loan amount, funded amount, and installment
+  - DTI and revolving utilization as independent risk indicators
 
-Imputed missing values using median for numerical columns and mode/“Unknown” for categorical fields
+### SQL Segmentation and Risk Analysis
+- Default rate by loan purpose
+- Default rate by grade and sub-grade
+- Default rate by employment length and state
+- Loan amount bucket analysis
+- Default trend over time (month and year)
+- Composite risk segmentation using loan amount, DTI, and income
+- Feature engineering:
+  - DTI risk categories
+  - Income brackets
+  - Combined risk classifications
 
-Standardized data types and cleaned categorical values
+## 6. Key Insights and Findings
 
-Exported a cleaned dataset for further analysis
+| Category | Finding | Interpretation |
+|----------|---------|----------------|
+| Debt-to-Income Ratio | Borrowers with DTI > 25% show higher default rates | Higher repayment pressure increases risk |
+| Income Levels | Income < $50,000 is associated with more defaults | Lower repayment capacity |
+| Credit Utilization | Revolving utilization > 80% strongly correlates with default | Indicates financial stress |
+| Loan Purpose | Small-business, medical, and debt-consolidation loans show higher defaults | Borrowers likely face unstable or emergency expenses |
+| Credit Grades | Grades E, F, G show the highest default rates | Lower creditworthiness |
+| Combined Risk Factors | High loan amount + high DTI + low income = highest risk segment | Most likely to default |
 
-Exploratory Data Analysis (Python)
+## 7. Project Summary
+This project identifies high-risk borrower groups, explains reasons behind default patterns, and highlights key risk indicators such as DTI, income, credit utilization, loan purpose, and credit grade. Python and SQL were used to build actionable credit risk segmentation that can support underwriting, portfolio monitoring, and credit policy decisions.
 
-Analyzed loan status distribution
-
-Examined distributions of loan amount, annual income, interest rate, and installment amounts
-
-Performed categorical analysis for loan grade, loan purpose, and employment length
-
-Detected outliers using boxplots
-
-Generated a correlation heatmap to identify important financial relationships
-
-Confirmed strong correlation among loan amount, funded amount, and installment
-
-Identified DTI and revolving utilization as independent risk indicators
-
-SQL Segmentation and Risk Analysis
-
-Calculated default rates by loan purpose, grade, sub-grade, employment length, state, and loan amount ranges
-
-Analyzed default trends over time (monthly and yearly)
-
-Built composite risk segments such as high loan amount + high DTI + low income
-
-Engineering additional risk flags including:
-
-DTI risk categories
-
-Income brackets
-
-Combined risk classification using DTI and interest rate
-
-6. Key Insights and Findings
-Category	Finding	Interpretation
-Debt-to-Income Ratio	Borrowers with DTI greater than 25% show significantly higher default rates	Higher repayment pressure leads to greater likelihood of delinquency
-Income Levels	Borrowers earning less than $50,000 have higher probability of default	Indicates limited repayment capacity
-Credit Utilization	Revolving utilization above 80% strongly correlates with default	High utilization suggests financial stress and overextension
-Loan Purpose	Small-business, medical, and debt-consolidation loans show elevated default rates	These purposes align with unstable or emergency financial needs
-Credit Grades	Grades E, F, and G have substantially higher default rates	Reflects lower creditworthiness and greater risk
-Combined Risk Factors	High loan amount with high DTI and low income forms the highest risk borrower segment	Represents borrowers most likely to default
-7. Project Summary
-
-This project identifies high-risk borrower groups, examines financial and behavioral reasons for default, and highlights key indicators such as DTI, income level, credit utilization, loan purpose, and credit grade. The SQL and Python analysis provides actionable risk segmentation and supports improved lending decisions, portfolio monitoring, and credit policy development.
-
-Author
-
+## Author
 Shreya Nigam
