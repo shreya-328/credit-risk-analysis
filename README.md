@@ -1,18 +1,17 @@
 # Credit Risk Analysis Project
 
 ## 1. Project Overview
-This project is an end-to-end Credit Risk Analysis pipeline built using Python and SQL. It identifies patterns of loan default, analyzes borrower risk factors, and provides insights that support data-driven lending decisions. It demonstrates core data analysis skills including data cleaning, exploratory analysis, SQL analytics, and insight generation.
+This project provides an end-to-end Credit Risk Analysis pipeline using Python and SQL. It identifies borrower segments with high default risk, analyzes financial drivers of borrower behavior, and delivers insights that support improved lending decisions, pricing strategy, and portfolio risk management.
 
 ## 2. Business Objective
 To analyze borrower demographic, financial, and credit behavior data in order to:
-- Identify borrower segments with high default risk
-- Understand key drivers of credit risk
-- Support lending teams in improving loan approvals, pricing, and portfolio monitoring
+- Identify borrower groups most likely to default
+- Understand the financial indicators that drive credit risk
+- Support data-driven lending and credit policy decisions
 
 ## 3. Dataset Information
 - Source: Kaggle – Credit Risk Dataset by “ranadeep”
-- Contains borrower financial information, demographics, credit behavior, and loan repayment details
-- Raw data is available on Kaggle and not stored in this repository
+- Contains borrower demographics, income, loan attributes, credit behavior, and repayment outcomes
 
 ## 4. Project Structure
 ```
@@ -25,50 +24,50 @@ credit-risk-analysis/
 └── README.md
 ```
 
-## 5. Workflow Completed
+## 5. Workflow Summary
 
 ### Data Cleaning (Python)
-- Loaded the raw dataset and reviewed schema
-- Removed columns with more than 70% missing data
-- Imputed missing numerical values using median
-- Imputed categorical missing values using mode or “Unknown”
-- Standardized data types and cleaned categorical values
-- Exported the cleaned dataset for further analysis
+- Removed columns with excessive missing values
+- Imputed numerical and categorical missing values
+- Cleaned and standardized dataset for analysis
 
 ### Exploratory Data Analysis (Python)
-- Loan status distribution
-- Histograms of annual income, loan amount, interest rate
-- Categorical analysis of grade, purpose, employment length
-- Outlier detection using boxplots
-- Correlation heatmap showing:
-  - High correlation between loan amount, funded amount, and installment
-  - DTI and revolving utilization as independent risk indicators
+- Examined loan status distribution
+- Analyzed income, loan amount, interest rate, and installment patterns
+- Assessed grade, purpose, and employment length distributions
+- Identified outliers and analyzed feature correlations
 
-### SQL Segmentation and Risk Analysis
-- Default rate by loan purpose
-- Default rate by grade and sub-grade
-- Default rate by employment length and state
-- Loan amount bucket analysis
-- Default trend over time (month and year)
-- Composite risk segmentation using loan amount, DTI, and income
-- Feature engineering:
-  - DTI risk categories
-  - Income brackets
-  - Combined risk classifications
+### SQL-Based Risk Segmentation
+- Default rate analysis by loan purpose, grade, sub-grade, employment length, and geography
+- Loan amount bucket segmentation
+- Time-based default behavior
+- Composite segmentation using DTI, income, and loan amount
+- Feature engineering to create risk-based borrower categories
 
-## 6. Key Insights and Findings
+## 6. Key Insights
 
-| Category | Finding | Interpretation |
-|----------|---------|----------------|
-| Debt-to-Income Ratio | Borrowers with DTI > 25% show higher default rates | Higher repayment pressure increases risk |
-| Income Levels | Income < $50,000 is associated with more defaults | Lower repayment capacity |
-| Credit Utilization | Revolving utilization > 80% strongly correlates with default | Indicates financial stress |
-| Loan Purpose | Small-business, medical, and debt-consolidation loans show higher defaults | Borrowers likely face unstable or emergency expenses |
-| Credit Grades | Grades E, F, G show the highest default rates | Lower creditworthiness |
-| Combined Risk Factors | High loan amount + high DTI + low income = highest risk segment | Most likely to default |
+| Factor | Finding | Interpretation |
+|--------|---------|----------------|
+| Debt-to-Income Ratio | DTI > 25% correlates with higher defaults | Indicates repayment burden and limited cash flow |
+| Income Level | Income < $50,000 defaults more often | Lower financial stability |
+| Credit Utilization | Utilization > 80% strongly predicts default | Signs of borrower financial stress |
+| Loan Purpose | Small-business and medical loans show higher risk | Unstable or emergency financial needs |
+| Credit Grades | Grades E, F, G have the highest default rates | Indicates weaker creditworthiness |
+| Combined Factors | High loan amount + high DTI + low income | Strongest indicator of default likelihood |
 
-## 7. Project Summary
-This project identifies high-risk borrower groups, explains reasons behind default patterns, and highlights key risk indicators such as DTI, income, credit utilization, loan purpose, and credit grade. Python and SQL were used to build actionable credit risk segmentation that can support underwriting, portfolio monitoring, and credit policy decisions.
+## 7. Upcoming Business Problem: Early Warning System (EWS)
+The next phase of this project focuses on developing an Early Warning System to detect pre-default risk using borrower financial behavior indicators. The goal is to classify borrowers into Low, Medium, High, and Very High Early-Risk categories.
+
+### Planned Objectives
+- Engineer financial stress indicators such as DTI buckets, utilization flags, installment burden, and income tiers
+- Build composite early-risk categories using SQL and Python
+- Quantify default likelihood within each early-risk segment
+- Provide actionable recommendations for credit policy and proactive borrower intervention
+
+This enhancement supports proactive risk management and strengthens the overall credit decisioning framework.
+
+## 8. Project Summary
+This project delivers a complete workflow from data cleaning to risk segmentation and uncovers meaningful insights into borrower behavior. The upcoming Early Warning System will extend the analysis by enabling proactive detection of repayment stress and further improving portfolio risk management.
 
 ## Author
 Shreya Nigam
