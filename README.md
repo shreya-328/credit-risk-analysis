@@ -1,166 +1,92 @@
-# Credit Risk Analysis Project
+Credit Risk Analysis Project
+1. Project Overview
 
-## Project Overview
-This project is a complete end-to-end data analysis pipeline for Credit Risk Assessment, it is built to demonstrate best practices for a data analyst portfolio. It includes Data Cleaning, Exploratory Data Analysis(EDA) using Python, and is structured for further SQL and Power BI Dashboard Development.
+This project is an end-to-end Credit Risk Analysis pipeline built using Python and SQL. It identifies patterns of loan default, analyzes borrower risk factors, and provides insights that support data-driven lending decisions. It demonstrates core data analyst skills including data cleaning, exploratory analysis, feature engineering, SQL segmentation, and business insight reporting.
 
-## Business Objective:
-Identify patters of default risk in loan applicants and inform risk-driven lending decisions.
+2. Business Objective
 
-## Dataset Information
-- Source: [Kaggle Credit Risk Dataset by ranadeep](https://www.kaggle.com/datasets/ranadeep/credit-risk-dataset)
-- Dataset includes borrower financial, demographic, and loan repayment information.
-- Raw dataset files are stored in the `data/raw/` folder (not included in this repository; please download from Kaggle).
+To analyze borrower demographic, financial, and credit behavior data in order to:
 
-## Project Structure
-```credit-risk-analysis/
+Identify borrower segments with high default risk
+
+Understand key drivers of credit risk
+
+Support lending teams in improving loan approvals, pricing, and portfolio monitoring
+
+3. Dataset Information
+
+Source: Kaggle – Credit Risk Dataset by “ranadeep”
+
+Contains borrower financial information, demographics, credit behavior, and repayment status
+
+Raw data is available on Kaggle and not stored in this repository
+
+4. Project Structure
+credit-risk-analysis/
 ├── python/
 │   ├── data_cleaning.py
 │   └── eda_analysis.py
 ├── sql/
 │   └── SQLQuery_1.sql
 └── README.md
-```
 
-## Workflow & Steps Completed
+5. Workflow Completed
+Data Cleaning (Python)
 
-1. Data Cleaning (Python)
-   - Loaded raw dataset, reviewed schema/types
-   - Dropped columns with >70% missing data
-   - Imputed missing values:
-       -**Numerical:** median
-       -**Categorical:** mode or 'Unknown'
-   - Standardized data types and cleaned text columns
-   - Exported Cleaned Data for further analysis
+Loaded the raw dataset and reviewed schema
 
-2. Exploratory Data Analysis (EDA)
-    - Target Variable Analysis : Loan Status Distribution (Counts & Plots)
-    - Numerical Distributions: Loan Amount, Income, Interest Rate, Installments (Histograms, Boxplots)
-    - Categorical Features : Grade, Purpose, Employment Length (Barplots, Value Counts)
-    - Default Rate Analysis: By Grafe, Purpose, and Segment
-    - Correlation Heatmap: Detected redundant vs unique features for modeling
-        - High Correlation among loan_amnt, funded_amnt, installment-one retained for analysis
-        - DTI and Revolving Utilization are independent risk factors
-        - Interest Rate and Annual Income show limited Correlation
-    - Summary of Insights : informs all next SQL and Dashboard Work
-          
-3. Prepared for Next Phase
-    - All Cleaning and EDA completed
-    - Ready to move to Advancced SQL and Power BI
-  
-## Key Visuals and Outputs
-  - Loan Status Bar Chart
-  - Histograms for Loan Amount, Income, Rate
-  - BoxPlots for outlier analysis
-  - Category bar charts for Grade, Purpose
-  - Correlation Heatmap for major features
-  - Default rates by Key Business Segments
+Removed columns with more than 70% missing data
 
-## Next Steps
-Business Problem & Approach (Next Phase) 
+Imputed missing values using median for numerical columns and mode/“Unknown” for categorical fields
 
-Business Problem 
+Standardized data types and cleaned categorical values
 
-Lending institutions face high financial risk when borrowers default on loans. The goal is to use borrower demographic, financial, and credit behavior data to predict the likelihood of loan default, enabling banks to make more informed lending decisions, optimize risk exposure, and improve portfolio quality. 
+Exported a cleaned dataset for further analysis
 
-Approach for the Upcoming Stages 
+Exploratory Data Analysis (Python)
 
-To solve this, the project will extend beyond data cleaning and EDA into advanced analytic steps used in real credit-risk teams: 
+Analyzed loan status distribution
 
-Feature Engineering 
+Examined distributions of loan amount, annual income, interest rate, and installment amounts
 
-- Create borrower risk indicators such as DTI buckets, interest-rate bands, credit utilization flags, income tiers, installment-to-income ratio, and combined risk categories. 
+Performed categorical analysis for loan grade, loan purpose, and employment length
 
-- Enhance interpretability by building business-friendly categorical variables. 
+Detected outliers using boxplots
 
-Credit Risk Modeling (Supervised Machine Learning) 
+Generated a correlation heatmap to identify important financial relationships
 
-- Convert loan_status into a binary default flag. 
+Confirmed strong correlation among loan amount, funded amount, and installment
 
-- Train baseline and advanced models (Logistic Regression, Random Forest, XGBoost). 
+Identified DTI and revolving utilization as independent risk indicators
 
-- Evaluate models with industry metrics: ROC-AUC, Precision/Recall, Confusion Matrix. 
+SQL Segmentation and Risk Analysis
 
-- Generate Probability of Default (PD) for each borrower. 
+Calculated default rates by loan purpose, grade, sub-grade, employment length, state, and loan amount ranges
 
-Risk Scorecard Development 
+Analyzed default trends over time (monthly and yearly)
 
-- Translate PD predictions into a scorecard similar to those used by credit bureaus. 
+Built composite risk segments such as high loan amount + high DTI + low income
 
-- Create risk buckets (Low, Medium, High, Very High Risk) for business decisions. 
+Engineering additional risk flags including:
 
-Business Insights Development 
+DTI risk categories
 
-- Identify segments with the highest expected loss. 
+Income brackets
 
-R- ecommend changes in credit policy, pricing strategy, and approval rules. 
+Combined risk classification using DTI and interest rate
 
-- Provide actionable insights for risk managers and underwriters. 
+6. Key Insights and Findings
+Category	Finding	Interpretation
+Debt-to-Income Ratio	Borrowers with DTI greater than 25% show significantly higher default rates	Higher repayment pressure leads to greater likelihood of delinquency
+Income Levels	Borrowers earning less than $50,000 have higher probability of default	Indicates limited repayment capacity
+Credit Utilization	Revolving utilization above 80% strongly correlates with default	High utilization suggests financial stress and overextension
+Loan Purpose	Small-business, medical, and debt-consolidation loans show elevated default rates	These purposes align with unstable or emergency financial needs
+Credit Grades	Grades E, F, and G have substantially higher default rates	Reflects lower creditworthiness and greater risk
+Combined Risk Factors	High loan amount with high DTI and low income forms the highest risk borrower segment	Represents borrowers most likely to default
+7. Project Summary
 
-Dashboard & Reporting (Power BI / Tableau) 
+This project identifies high-risk borrower groups, examines financial and behavioral reasons for default, and highlights key indicators such as DTI, income level, credit utilization, loan purpose, and credit grade. The SQL and Python analysis provides actionable risk segmentation and supports improved lending decisions, portfolio monitoring, and credit policy development.
 
-- Build a comprehensive Credit Risk Dashboard containing: 
+Author
 
-- Portfolio overview 
-
-- Default trends 
-
-- Risk segmentation 
-
-- Top risky borrower profiles 
-
-- State-wise and purpose-wise performance 
-
-Final output will serve as a presentation-ready analytical story for portfolio monitoring. 
-
-                    
-                    CREDIT RISK ANALYSIS - SUMMARY
-
-BUSINESS GOAL:
-
-  ✔ Identify high-default borrower segments
-  
-  ✔ Understand drivers of credit risk
-  
-  ✔ Help lenders make better approval, pricing & monitoring decisions
-
-APPROACH:
-  1. Data Cleaning (Python)
-  2. EDA (Python)
-  3. Risk Segmentation (SQL)
-  4. Feature Engineering (SQL)
-  5. Business Insights & Recommendations
-
-KEY QUESTIONS ANSWERED:
-
-  ✔ Who defaults?
-  
-  ✔ Why do they default?
-  
-  ✔ Which borrower groups are most risky?
-  
-  ✔ Which financial attributes drive risk?
-  
-  ✔ Which segments need stricter lending rules?
-  
-
-HOW IT WAS SOLVED:
-
-  → Python: cleaning, distributions, outliers, correlations
-  
-  → SQL: segmentation, default rates, composite risk flags
-  
-  → Insights: DTI, income, purpose, sub-grade, utilization are strongest predictors
-
-BUSINESS OUTCOME:
-
-  → Clear understanding of borrower risk
-  
-  → Action-ready risk categories
-  
-  → Data-driven lending decisions
-
-
-
-## Author
 Shreya Nigam
-   
