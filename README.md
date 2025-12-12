@@ -44,6 +44,14 @@ credit-risk-analysis/
 - Composite segmentation using DTI, income, and loan amount
 - Feature engineering to create risk-based borrower categories
 
+## 5.1 Data Flow Diagram (DFD Level 0)
+
+The following diagram shows the high-level flow of data from the raw applicant dataset into the
+Credit Risk Analysis System, and how cleaned/segmented risk outputs are produced for stakeholders.
+
+📄 **View PDF:**  
+[DFD Level 0 – Credit Risk Analysis System](./DFD/Level%200%20-%20DFD.pdf)
+
 ## 6. Key Insights
 
 | Factor | Finding | Interpretation |
