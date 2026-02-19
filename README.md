@@ -1,81 +1,203 @@
-# Credit Risk Analysis Project
+# Credit Risk Analysis & Early Warning System (EWS)
 
 ## 1. Project Overview
-This project provides an end-to-end Credit Risk Analysis pipeline using Python and SQL. It identifies borrower segments with high default risk, analyzes financial drivers of borrower behavior, and delivers insights that support improved lending decisions, pricing strategy, and portfolio risk management.
 
-## 2. Business Objective
-To analyze borrower demographic, financial, and credit behavior data in order to:
-- Identify borrower groups most likely to default
-- Understand the financial indicators that drive credit risk
-- Support data-driven lending and credit policy decisions
+This project provides an end-to-end Credit Risk Analysis pipeline using Python and SQL. It analyzes borrower financial behavior, identifies high-risk segments, performs default risk segmentation, and lays the groundwork for building an Early Warning System (EWS).
+
+The objective is to support data-driven credit decisioning and proactive portfolio risk monitoring in a banking environment.
+
+---
+
+## 2. Business Objectives
+
+### Phase 1 – Credit Risk Analysis (Completed)
+- Identify borrower segments most likely to default
+- Analyze financial indicators driving credit risk
+- Perform segmentation using SQL-based risk logic
+- Generate business insights for credit policy decisions
+
+### Phase 2 – Early Warning System (In Progress)
+- Engineer financial stress indicators
+- Classify borrowers into Low / Medium / High / Very High early-risk categories
+- Detect potential pre-default signals
+- Enable proactive borrower monitoring
+
+---
 
 ## 3. Dataset Information
-- Source: Kaggle – Credit Risk Dataset by “ranadeep”
-- Contains borrower demographics, income, loan attributes, credit behavior, and repayment outcomes
+
+- Source: Kaggle – Credit Risk Dataset (ranadeep)
+- Data includes:
+  - Borrower demographics
+  - Loan attributes
+  - Income and DTI metrics
+  - Credit behavior indicators
+  - Repayment outcomes (loan_status)
+
+---
 
 ## 4. Project Structure
 ```
-credit-risk-analysis/
+CREDIT-RISK-ANALYSIS/
+│
+├── Dashboard/
+│ ├── Credit Risk Analysis.pbix
+│ └── Credit Risk Analysis.pdf
+│
+├── DFD/
+│ ├── Level 0 - DFD.pdf
+│ ├── Level_1_DFD.pdf
+│ └── Level_2_DFD.pdf
+│
+├── Figures/
+│ ├── count_Each_loan_status.png
+│ ├── count_of_loan_grade.png
+│ ├── Distribution_of_annual_income.png
+│ └── Distribution_of_loan_amount.png
+│
 ├── python/
-│   ├── data_cleaning.py
-│   └── eda_analysis.py
+│ ├── data_cleaning.py
+│ ├── eda_analysis.py
+│ └── ews_feature_engg.py
+│
 ├── sql/
-│   └── SQLQuery_1.sql
+│ └── SQLQuery_1.sql
+│
+├── validation_outputs/
+│ ├── first_200_rows.csv
+│ ├── missing_percent.csv
+│ ├── problem_rows_sample.csv
+│ └── sample_200_rows.csv
+│
+├── .gitignore
 └── README.md
 ```
 
+---
+
 ## 5. Workflow Summary
 
-### Data Cleaning (Python)
-- Removed columns with excessive missing values
-- Imputed numerical and categorical missing values
-- Cleaned and standardized dataset for analysis
+### 5.1 Data Cleaning (data_cleaning.py)
 
-### Exploratory Data Analysis (Python)
-- Examined loan status distribution
-- Analyzed income, loan amount, interest rate, and installment patterns
-- Assessed grade, purpose, and employment length distributions
-- Identified outliers and analyzed feature correlations
+- Loaded raw loan dataset
+- Identified missing values and calculated missing percentages
+- Dropped columns with more than 70% missing data
+- Imputed:
+  - Numerical columns → Median
+  - Categorical columns → Mode
+- Converted categorical columns to appropriate data types
+- Standardized mixed-type columns
+- Exported cleaned dataset as `loan_cleaned.csv`
 
-### SQL-Based Risk Segmentation
-- Default rate analysis by loan purpose, grade, sub-grade, employment length, and geography
+---
+
+### 5.2 Exploratory Data Analysis (eda_analysis.py)
+
+Performed:
+
+- Loan status distribution analysis
+- Loan amount and income distribution analysis
+- Loan grade and purpose segmentation
+- Employment length distribution
+- Default rate calculation by grade
+- Outlier detection using boxplots
+- Correlation heatmap for key credit features
+
+Visual outputs saved under the Figures directory and used in Power BI dashboard.
+
+---
+
+### 5.3 SQL-Based Risk Segmentation (SQLQuery_1.sql)
+
+Implemented advanced segmentation queries:
+
+- Default rate by:
+  - Loan purpose
+  - Loan grade and sub-grade
+  - Employment length
+  - State
+  - Time (Year/Month)
 - Loan amount bucket segmentation
-- Time-based default behavior
-- Composite segmentation using DTI, income, and loan amount
-- Feature engineering to create risk-based borrower categories
+- Composite segmentation using:
+  - High loan amount
+  - High DTI
+  - Low income
+- Risk flag creation:
+  - High / Medium / Low Risk categories
+  - Income brackets
+- Default rate analysis by risk category and income bracket
 
-## 5.1 Data Flow Diagram (DFD Level 0)
+These queries support portfolio-level credit risk monitoring.
 
-The following diagram shows the high-level flow of data from the raw applicant dataset into the
-Credit Risk Analysis System, and how cleaned/segmented risk outputs are produced for stakeholders.
+---
 
-📄 **View PDF:**  
-[DFD Level 0 – Credit Risk Analysis System](./DFD/Level%200%20-%20DFD.pdf)
+### 5.4 Early Warning Feature Engineering (ews_feature_engg.py)
 
-## 6. Key Insights
+Prepared dataset for Early Warning System development:
 
-| Factor | Finding | Interpretation |
-|--------|---------|----------------|
-| Debt-to-Income Ratio | DTI > 25% correlates with higher defaults | Indicates repayment burden and limited cash flow |
-| Income Level | Income < $50,000 defaults more often | Lower financial stability |
-| Credit Utilization | Utilization > 80% strongly predicts default | Signs of borrower financial stress |
-| Loan Purpose | Small-business and medical loans show higher risk | Unstable or emergency financial needs |
-| Credit Grades | Grades E, F, G have the highest default rates | Indicates weaker creditworthiness |
-| Combined Factors | High loan amount + high DTI + low income | Strongest indicator of default likelihood |
+- Validated required columns
+- Generated missing value reports
+- Performed numeric normalization
+- Converted percentage-based fields to numeric
+- Created financial stress indicators:
+  - Monthly income
+  - Installment-to-income ratio
+- Identified problematic rows
+- Exported validation outputs for review
 
-## 7. Upcoming Business Problem: Early Warning System (EWS)
-The next phase of this project focuses on developing an Early Warning System to detect pre-default risk using borrower financial behavior indicators. The goal is to classify borrowers into Low, Medium, High, and Very High Early-Risk categories.
+This module forms the foundation for borrower-level early-risk detection.
 
-### Planned Objectives
-- Engineer financial stress indicators such as DTI buckets, utilization flags, installment burden, and income tiers
-- Build composite early-risk categories using SQL and Python
-- Quantify default likelihood within each early-risk segment
-- Provide actionable recommendations for credit policy and proactive borrower intervention
+---
 
-This enhancement supports proactive risk management and strengthens the overall credit decisioning framework.
+## 6. Key Business Insights
 
-## 8. Project Summary
-This project delivers a complete workflow from data cleaning to risk segmentation and uncovers meaningful insights into borrower behavior. The upcoming Early Warning System will extend the analysis by enabling proactive detection of repayment stress and further improving portfolio risk management.
+| Risk Driver | Observation | Business Impact |
+|-------------|------------|----------------|
+| High DTI (>25%) | Higher probability of default | Indicates repayment burden |
+| Income < 50K | Increased default frequency | Lower financial stability |
+| High Utilization | Strong correlation with default | Credit stress indicator |
+| Grades E–G | Highest default rates | Weak credit profile |
+| High Loan + High DTI + Low Income | Strongest composite risk | High-risk borrower cluster |
+
+---
+
+## 7. Early Warning System (Next Phase)
+
+The next enhancement of this project focuses on building an Early Warning System (EWS) to:
+
+- Classify borrowers into:
+  - Low Risk
+  - Medium Risk
+  - High Risk
+  - Very High Risk
+- Detect early financial stress patterns before default
+- Quantify risk movement across segments
+- Support proactive borrower intervention strategies
+
+This shifts the framework from reactive default analysis to proactive risk monitoring.
+
+---
+
+## 8. Tools & Technologies
+
+- Python (Pandas, NumPy, Matplotlib, Seaborn)
+- SQL (Risk segmentation and aggregation)
+- Power BI (Dashboard visualization)
+- CSV-based validation reporting
+
+---
+
+## 9. Project Summary
+
+This project demonstrates a structured banking analytics workflow:
+
+Data Cleaning → Exploratory Analysis → Risk Segmentation → Feature Engineering → Early Warning Framework
+
+It establishes a strong analytical foundation for developing a proactive credit risk monitoring system.
+
+---
 
 ## Author
-Shreya Nigam
+
+Shreya Nigam  
+Data Analyst – Banking & Risk Analytics
