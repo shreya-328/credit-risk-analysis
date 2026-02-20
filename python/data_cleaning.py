@@ -1,82 +1,125 @@
 import pandas as pd
 
-# Load the loan dataset
-df = pd.read_csv('/Users/shreya/Desktop/DATA/Datasets/CSV_Credit Risk Analysis/loan.csv')
 
-# Overview of the data
-print("Data Info:")
-print(df.head())
+# ------------------------------------------------------------
+# 1. Load Data
+# ------------------------------------------------------------
 
-# Checking for missing values
-missing_values = df.isnull().sum()
-print("\nMissing Values:")
-print(missing_values)
-
-# Summary statistics
-print("\nSummary Statistics:")
-print(df.describe())  # gives count, min, max, std, mean
-
-print('\nShowing first 5 rows ')
-print(df.head())
-
-# Fix mixed type columns by forcing all to string (columns at index 19 and 55)
-df.iloc[:, 19] = df.iloc[:, 19].astype(str)
-df.iloc[:, 55] = df.iloc[:, 55].astype(str)
-
-# Calculating missing value percentages
-missing_percent = (df.isnull().sum() / len(df)) * 100
-print("\nMissing Data Percentage per Column:")
-print(missing_percent[missing_percent > 0].sort_values(ascending=False))
-
-# Dropping columns with over 70% missing values
-threshold = 70
-cols_to_drop = missing_percent[missing_percent > threshold].index
-df_cleaned = df.drop(columns=cols_to_drop)
-print(f"\nDropped columns with >{threshold}% missing values: {list(cols_to_drop)}")
-
-# Checking result after dropping columns
-print(f"\nShape after dropping columns: {df_cleaned.shape}")
-
-# Separating numerical and categorical columns
-numerical_cols = df_cleaned.select_dtypes(include=['number']).columns
-categorical_cols = df_cleaned.select_dtypes(include=['object']).columns
-
-# Impute missing numerical values with median
-for col in numerical_cols:
-    median_value = df_cleaned[col].median()
-    df_cleaned[col].fillna(median_value, inplace=True)
-
-# Impute missing categorical values with mode
-for col in categorical_cols:
-    mode_value = df_cleaned[col].mode()[0]
-    df_cleaned[col].fillna(mode_value, inplace=True)
-
-# Convert categorical columns to 'category' dtype
-for col in categorical_cols:
-    df_cleaned[col] = df_cleaned[col].astype('category')
-
-# Add 'Unknown' category and fill missing values in 'verification_status_joint'
-df_cleaned['verification_status_joint'] = df_cleaned['verification_status_joint'].cat.add_categories(['Unknown'])
-df_cleaned['verification_status_joint'] = df_cleaned['verification_status_joint'].fillna('Unknown')
-
-# Strip whitespace and ensure string type for 'verification_status_joint'
-df_cleaned['verification_status_joint'] = df_cleaned['verification_status_joint'].astype(str).str.strip()
-
-# Final check for missing values
-print(f"\nTotal missing values after cleaning:")
-print(df_cleaned.isnull().sum().sum())
-
-# Showing cleaned data info and first few rows
-print("\nCleaned Data Info:")
-print(df_cleaned.info())
-
-print("\nCleaned Data Sample:")
-print(df_cleaned.head())
-
-# Export cleaned data to CSV
-df_cleaned.to_csv('loan_cleaned.csv', index=False)
+def load_data(file_path: str) -> pd.DataFrame:
+    """
+    Load raw loan dataset from CSV file.
+    """
+    return pd.read_csv(file_path, low_memory=False)
 
 
-print('-------------------')
+# ------------------------------------------------------------
+# 2. Drop High Missing Columns
+# ------------------------------------------------------------
 
-print(df_cleaned.columns)
+def drop_high_missing_columns(df: pd.DataFrame, threshold: float = 70.0) -> pd.DataFrame:
+    """
+    Drop columns with missing percentage above threshold.
+    """
+    missing_percent = (df.isnull().sum() / len(df)) * 100
+    cols_to_drop = missing_percent[missing_percent > threshold].index
+    return df.drop(columns=cols_to_drop)
+
+
+# ------------------------------------------------------------
+# 3. Fix Mixed Type Columns (Safe)
+# ------------------------------------------------------------
+
+def fix_mixed_types(df: pd.DataFrame, column_indices: list = None) -> pd.DataFrame:
+    """
+    Force selected columns (by index) to string type safely.
+    """
+    if column_indices:
+        for idx in column_indices:
+            if idx < len(df.columns):
+                df.iloc[:, idx] = df.iloc[:, idx].astype(str)
+    return df
+
+
+# ------------------------------------------------------------
+# 4. Impute Missing Values
+# ------------------------------------------------------------
+
+def impute_missing_values(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Impute numerical columns with median and categorical columns with mode.
+    """
+    numerical_cols = df.select_dtypes(include=["number"]).columns
+    categorical_cols = df.select_dtypes(include=["object"]).columns
+
+    # Numerical → Median
+    for col in numerical_cols:
+        median_value = df[col].median()
+        df[col] = df[col].fillna(median_value)
+
+    # Categorical → Mode (Safe)
+    for col in categorical_cols:
+        if not df[col].mode().empty:
+            mode_value = df[col].mode()[0]
+            df[col] = df[col].fillna(mode_value)
+
+    return df
+
+
+# ------------------------------------------------------------
+# 5. Standardize Specific Columns
+# ------------------------------------------------------------
+
+def clean_verification_status_joint(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Standardize verification_status_joint column.
+    """
+    if "verification_status_joint" in df.columns:
+        df["verification_status_joint"] = (
+            df["verification_status_joint"]
+            .astype(str)
+            .str.strip()
+            .fillna("Unknown")
+        )
+    return df
+
+
+# ------------------------------------------------------------
+# 6. Full Cleaning Pipeline
+# ------------------------------------------------------------
+
+def clean_data(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Full cleaning pipeline combining all cleaning steps.
+    """
+    df = fix_mixed_types(df, column_indices=[19, 55])
+    df = drop_high_missing_columns(df, threshold=70.0)
+    df = impute_missing_values(df)
+    df = clean_verification_status_joint(df)
+
+    return df
+
+
+# ------------------------------------------------------------
+# 7. Save Cleaned Data
+# ------------------------------------------------------------
+
+def save_cleaned_data(df: pd.DataFrame, output_path: str) -> None:
+    """
+    Save cleaned dataframe to CSV.
+    """
+    df.to_csv(output_path, index=False)
+
+
+# ------------------------------------------------------------
+# 8. Run as Script
+# ------------------------------------------------------------
+
+if __name__ == "__main__":
+    input_path = "data/loan.csv"
+    output_path = "data/loan_cleaned.csv"
+
+    raw_df = load_data(input_path)
+    cleaned_df = clean_data(raw_df)
+    save_cleaned_data(cleaned_df, output_path)
+
+    print("Data cleaning completed successfully.")
